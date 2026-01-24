@@ -75,12 +75,23 @@ export function Header({ lang = 'ja' }: HeaderProps) {
               <p className="text-ink-muted">{siteConfig.telHours}</p>
             </div>
 
-            <Link
-              href={reserveHref}
-              className="btn-quiet text-xs"
-            >
-              {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
-            </Link>
+{siteConfig.reservationUrl.startsWith('http') ? (
+              <a
+                href={siteConfig.reservationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-quiet text-xs"
+              >
+                {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
+              </a>
+            ) : (
+              <Link
+                href={reserveHref}
+                className="btn-quiet text-xs"
+              >
+                {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -145,13 +156,25 @@ export function Header({ lang = 'ja' }: HeaderProps) {
               </div>
 
               <div className="flex gap-4">
-                <Link
-                  href={reserveHref}
-                  className="btn-quiet text-xs"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
-                </Link>
+                {siteConfig.reservationUrl.startsWith('http') ? (
+                  <a
+                    href={siteConfig.reservationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-quiet text-xs"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
+                  </a>
+                ) : (
+                  <Link
+                    href={reserveHref}
+                    className="btn-quiet text-xs"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
+                  </Link>
+                )}
                 <Link
                   href={langSwitchHref}
                   className="btn-quiet text-xs"
