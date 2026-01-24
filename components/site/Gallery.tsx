@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
+import { placeholderImage } from '@/lib/siteImages'
 
 type GalleryImage = {
   src: string
@@ -59,16 +61,26 @@ export function GalleryItem({
   aspectRatio = 'gallery',
   className = '',
 }: GalleryItemProps) {
+  const [imgSrc, setImgSrc] = useState(src)
   const aspectClass = aspectRatio === 'hero' ? 'aspect-hero' : aspectClasses[aspectRatio]
+
+  const handleError = () => {
+    if (imgSrc.endsWith('.jpg')) {
+      setImgSrc(imgSrc.replace('.jpg', '.svg'))
+    } else {
+      setImgSrc(placeholderImage)
+    }
+  }
 
   return (
     <figure className={`relative ${aspectClass} overflow-hidden image-depth image-grain ${className}`}>
       <Image
-        src={src}
+        src={imgSrc}
         alt={alt}
         fill
         className="object-cover"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        onError={handleError}
       />
     </figure>
   )

@@ -1,6 +1,9 @@
-import { ReactNode } from 'react'
+'use client'
+
+import { ReactNode, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { placeholderImage } from '@/lib/siteImages'
 
 type CardProps = {
   children: ReactNode
@@ -46,14 +49,25 @@ export function CardImage({
   aspectRatio = 'wide',
   className = '',
 }: CardImageProps) {
+  const [imgSrc, setImgSrc] = useState(src)
+
+  const handleError = () => {
+    if (imgSrc.endsWith('.jpg')) {
+      setImgSrc(imgSrc.replace('.jpg', '.svg'))
+    } else {
+      setImgSrc(placeholderImage)
+    }
+  }
+
   return (
     <figure className={`relative ${aspectClasses[aspectRatio]} overflow-hidden image-depth image-grain ${className}`}>
       <Image
-        src={src}
+        src={imgSrc}
         alt={alt}
         fill
         className="object-cover transition-transform duration-800 group-hover:scale-[1.02]"
         sizes="(max-width: 768px) 100vw, 50vw"
+        onError={handleError}
       />
     </figure>
   )

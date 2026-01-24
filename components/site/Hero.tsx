@@ -1,7 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
+import { placeholderImage } from '@/lib/siteImages'
 
 type HeroProps = {
   imageSrc: string
@@ -18,17 +19,29 @@ export function Hero({
   className = '',
   overlay = true,
 }: HeroProps) {
+  const [imgSrc, setImgSrc] = useState(imageSrc)
+
+  const handleError = () => {
+    // Try SVG fallback first, then placeholder
+    if (imgSrc.endsWith('.jpg')) {
+      setImgSrc(imgSrc.replace('.jpg', '.svg'))
+    } else {
+      setImgSrc(placeholderImage)
+    }
+  }
+
   return (
     <div className={`relative w-full ${className}`}>
       {/* Image container with fixed aspect ratio */}
       <div className="relative aspect-hero w-full overflow-hidden">
         <Image
-          src={imageSrc}
+          src={imgSrc}
           alt={imageAlt}
           fill
           priority
           className="object-cover"
           sizes="100vw"
+          onError={handleError}
         />
 
         {/* Depth overlay */}
