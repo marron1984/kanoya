@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
-import { placeholderImage } from '@/lib/siteImages'
 
 type HeroProps = {
   imageSrc: string
@@ -19,33 +18,31 @@ export function Hero({
   className = '',
   overlay = true,
 }: HeroProps) {
-  const [imgSrc, setImgSrc] = useState(imageSrc)
-
-  const handleError = () => {
-    // Try SVG fallback first, then placeholder
-    if (imgSrc.endsWith('.jpg')) {
-      setImgSrc(imgSrc.replace('.jpg', '.svg'))
-    } else {
-      setImgSrc(placeholderImage)
-    }
-  }
+  const [hasError, setHasError] = useState(false)
 
   return (
     <div className={`relative w-full ${className}`}>
       {/* Image container with fixed aspect ratio */}
-      <div className="relative aspect-hero w-full overflow-hidden">
-        <Image
-          src={imgSrc}
-          alt={imageAlt}
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-          onError={handleError}
-        />
+      <div className="relative aspect-hero w-full overflow-hidden bg-[#F1E6D6]">
+        {hasError ? (
+          // White placeholder with label
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#F1E6D6] to-[#E8DCC8]">
+            <span className="text-[#6E5A4B]/40 text-sm tracking-wider">Hero Image</span>
+          </div>
+        ) : (
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+            onError={() => setHasError(true)}
+          />
+        )}
 
         {/* Depth overlay */}
-        {overlay && (
+        {overlay && !hasError && (
           <>
             {/* Vignette */}
             <div
@@ -62,6 +59,16 @@ export function Hero({
               }}
             />
           </>
+        )}
+
+        {/* Light overlay for placeholder readability */}
+        {hasError && (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(to top, rgba(28, 21, 17, 0.15) 0%, transparent 60%)',
+            }}
+          />
         )}
       </div>
 
@@ -83,8 +90,7 @@ type HeroTitleProps = {
 export function HeroTitle({ children, className = '' }: HeroTitleProps) {
   return (
     <h1
-      className={`text-bg-main text-2xl md:text-3xl lg:text-4xl font-normal tracking-wider leading-relaxed ${className}`}
-      style={{ textShadow: '0 2px 20px rgba(28, 21, 17, 0.3)' }}
+      className={`text-ink-main text-2xl md:text-3xl lg:text-4xl font-normal tracking-wider leading-relaxed ${className}`}
     >
       {children}
     </h1>
@@ -99,8 +105,7 @@ type HeroSubtitleProps = {
 export function HeroSubtitle({ children, className = '' }: HeroSubtitleProps) {
   return (
     <p
-      className={`text-bg-main text-sm md:text-base tracking-wider mt-4 opacity-90 ${className}`}
-      style={{ textShadow: '0 1px 10px rgba(28, 21, 17, 0.3)' }}
+      className={`text-ink-main text-sm md:text-base tracking-wider mt-4 opacity-80 ${className}`}
     >
       {children}
     </p>

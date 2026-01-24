@@ -73,8 +73,3 @@ export type DiningImageKey = keyof typeof siteImages.dining
 export type ExperienceImageKey = keyof typeof siteImages.experience
 export type AccessImageKey = keyof typeof siteImages.access
 export type AmenityImageKey = keyof typeof siteImages.amenity
-
-/**
- * Fallback placeholder image (data URI)
- */
-export const placeholderImage = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><rect fill="#2A1F17" width="1920" height="1080"/><text x="960" y="540" font-family="serif" font-size="48" fill="#F1E6D6" text-anchor="middle" opacity="0.5">Image Placeholder</text></svg>')}`

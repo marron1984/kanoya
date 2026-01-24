@@ -3,7 +3,6 @@
 import { ReactNode, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { placeholderImage } from '@/lib/siteImages'
 
 type CardProps = {
   children: ReactNode
@@ -49,26 +48,24 @@ export function CardImage({
   aspectRatio = 'wide',
   className = '',
 }: CardImageProps) {
-  const [imgSrc, setImgSrc] = useState(src)
-
-  const handleError = () => {
-    if (imgSrc.endsWith('.jpg')) {
-      setImgSrc(imgSrc.replace('.jpg', '.svg'))
-    } else {
-      setImgSrc(placeholderImage)
-    }
-  }
+  const [hasError, setHasError] = useState(false)
 
   return (
-    <figure className={`relative ${aspectClasses[aspectRatio]} overflow-hidden image-depth image-grain ${className}`}>
-      <Image
-        src={imgSrc}
-        alt={alt}
-        fill
-        className="object-cover transition-transform duration-800 group-hover:scale-[1.02]"
-        sizes="(max-width: 768px) 100vw, 50vw"
-        onError={handleError}
-      />
+    <figure className={`relative ${aspectClasses[aspectRatio]} overflow-hidden bg-[#F1E6D6] ${className}`}>
+      {hasError ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#F1E6D6] to-[#E8DCC8] border border-[#6E5A4B]/10 group-hover:from-[#EDE1D0] transition-colors duration-300">
+          <span className="text-[#6E5A4B]/30 text-xs tracking-wider">{alt || 'Image'}</span>
+        </div>
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover transition-transform duration-800 group-hover:scale-[1.02]"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          onError={() => setHasError(true)}
+        />
+      )}
     </figure>
   )
 }

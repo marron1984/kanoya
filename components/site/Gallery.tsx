@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { placeholderImage } from '@/lib/siteImages'
 
 type GalleryImage = {
   src: string
@@ -61,27 +60,25 @@ export function GalleryItem({
   aspectRatio = 'gallery',
   className = '',
 }: GalleryItemProps) {
-  const [imgSrc, setImgSrc] = useState(src)
+  const [hasError, setHasError] = useState(false)
   const aspectClass = aspectRatio === 'hero' ? 'aspect-hero' : aspectClasses[aspectRatio]
 
-  const handleError = () => {
-    if (imgSrc.endsWith('.jpg')) {
-      setImgSrc(imgSrc.replace('.jpg', '.svg'))
-    } else {
-      setImgSrc(placeholderImage)
-    }
-  }
-
   return (
-    <figure className={`relative ${aspectClass} overflow-hidden image-depth image-grain ${className}`}>
-      <Image
-        src={imgSrc}
-        alt={alt}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        onError={handleError}
-      />
+    <figure className={`relative ${aspectClass} overflow-hidden bg-[#F1E6D6] ${className}`}>
+      {hasError ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#F1E6D6] to-[#E8DCC8] border border-[#6E5A4B]/10">
+          <span className="text-[#6E5A4B]/30 text-xs tracking-wider">{alt || 'Image'}</span>
+        </div>
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          onError={() => setHasError(true)}
+        />
+      )}
     </figure>
   )
 }
