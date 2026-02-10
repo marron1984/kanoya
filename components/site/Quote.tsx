@@ -8,7 +8,8 @@ type QuoteProps = {
 export function Quote({ children, className = '' }: QuoteProps) {
   return (
     <blockquote
-      className={`text-base md:text-lg leading-loose tracking-wider text-ink-main ${className}`}
+      className={`text-base md:text-lg leading-loose text-shironezu/80 ${className}`}
+      style={{ letterSpacing: '0.12em' }}
     >
       {children}
     </blockquote>

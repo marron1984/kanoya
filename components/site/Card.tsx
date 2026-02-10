@@ -52,7 +52,7 @@ export function CardImage({
         src={src}
         alt={alt}
         fill
-        className="object-cover transition-transform duration-800 group-hover:scale-[1.02]"
+        className="object-cover transition-transform duration-1200 ease-quint group-hover:scale-[1.03]"
         sizes="(max-width: 768px) 100vw, 50vw"
       />
     </figure>
@@ -84,7 +84,10 @@ export function CardTitle({
   as: Component = 'h3',
 }: CardTitleProps) {
   return (
-    <Component className={`text-lg md:text-xl tracking-wider mb-4 ${className}`}>
+    <Component
+      className={`text-lg md:text-xl mb-4 text-shironezu/90 ${className}`}
+      style={{ letterSpacing: '0.12em' }}
+    >
       {children}
     </Component>
   )
@@ -97,7 +100,10 @@ type CardTextProps = {
 
 export function CardText({ children, className = '' }: CardTextProps) {
   return (
-    <div className={`text-sm text-ink-muted leading-loose tracking-wider ${className}`}>
+    <div
+      className={`text-sm text-shironezu/50 leading-loose ${className}`}
+      style={{ letterSpacing: '0.08em' }}
+    >
       {children}
     </div>
   )

@@ -1,9 +1,7 @@
 import Link from 'next/link'
 
-type LogoVariant = 'text' | 'mark' | 'en'
-
 type LogoProps = {
-  variant?: LogoVariant
+  variant?: 'text' | 'mark' | 'en'
   size?: 'sm' | 'md' | 'lg'
   className?: string
   href?: string
@@ -22,10 +20,16 @@ export function Logo({
   href = '/',
 }: LogoProps) {
   const content = (
-    <span className={`font-serif tracking-wider ${sizeClasses[size]} ${className}`}>
-      {variant === 'text' && '奈良 鹿のや'}
+    <span
+      className={`${sizeClasses[size]} ${className}`}
+      style={{
+        fontFamily: variant === 'mark' ? 'var(--font-serif)' : 'var(--font-en)',
+        letterSpacing: '0.25em',
+      }}
+    >
+      {variant === 'text' && 'LU NOYA'}
       {variant === 'mark' && '鹿'}
-      {variant === 'en' && 'KAN0YA'}
+      {variant === 'en' && 'LU NOYA'}
     </span>
   )
 

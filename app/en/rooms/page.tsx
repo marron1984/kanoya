@@ -103,7 +103,7 @@ export default function RoomsPageEn() {
           <div className="mt-10">
             <ReservationCTA
               variant="secondary"
-              className="border-bg-main text-bg-main hover:bg-bg-main hover:text-bg-deep"
+              className="border-kinnezu text-kinnezu hover:bg-kinnezu-dark/20"
               label="Check Availability"
             />
           </div>

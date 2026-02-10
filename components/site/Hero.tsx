@@ -20,7 +20,6 @@ export function Hero({
 }: HeroProps) {
   return (
     <div className={`relative w-full ${className}`}>
-      {/* Image container with fixed aspect ratio */}
       <div className="relative aspect-hero w-full overflow-hidden">
         <Image
           src={imageSrc}
@@ -31,28 +30,24 @@ export function Hero({
           sizes="100vw"
         />
 
-        {/* Depth overlay */}
         {overlay && (
           <>
-            {/* Vignette */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: 'radial-gradient(ellipse at center, transparent 30%, rgba(28, 21, 17, 0.25) 100%)',
+                background: 'radial-gradient(ellipse at center, transparent 30%, rgba(13, 13, 13, 0.3) 100%)',
               }}
             />
-            {/* Bottom gradient for text readability */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: 'linear-gradient(to top, rgba(28, 21, 17, 0.5) 0%, transparent 60%)',
+                background: 'linear-gradient(to top, rgba(13, 13, 13, 0.6) 0%, transparent 60%)',
               }}
             />
           </>
         )}
       </div>
 
-      {/* Content overlay */}
       <div className="absolute inset-0 flex items-end justify-start">
         <div className="w-full max-w-content mx-auto px-6 md:px-8 pb-12 md:pb-20">
           {children}
@@ -70,8 +65,8 @@ type HeroTitleProps = {
 export function HeroTitle({ children, className = '' }: HeroTitleProps) {
   return (
     <h1
-      className={`text-bg-main text-2xl md:text-3xl lg:text-4xl font-normal tracking-wider leading-relaxed ${className}`}
-      style={{ textShadow: '0 2px 20px rgba(28, 21, 17, 0.3)' }}
+      className={`text-shironezu text-2xl md:text-3xl lg:text-4xl font-normal leading-relaxed ${className}`}
+      style={{ textShadow: '0 2px 20px rgba(13, 13, 13, 0.4)', letterSpacing: '0.12em' }}
     >
       {children}
     </h1>
@@ -86,8 +81,8 @@ type HeroSubtitleProps = {
 export function HeroSubtitle({ children, className = '' }: HeroSubtitleProps) {
   return (
     <p
-      className={`text-bg-main text-sm md:text-base tracking-wider mt-4 opacity-90 ${className}`}
-      style={{ textShadow: '0 1px 10px rgba(28, 21, 17, 0.3)' }}
+      className={`text-shironezu text-sm md:text-base mt-4 opacity-80 ${className}`}
+      style={{ textShadow: '0 1px 10px rgba(13, 13, 13, 0.4)', letterSpacing: '0.15em' }}
     >
       {children}
     </p>

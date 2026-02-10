@@ -1,13 +1,16 @@
 /**
- * Site Configuration
- * Environment-based settings with fallbacks
+ * Site Configuration - Lu Noya
+ * 最高級オーベルジュ旅館
  */
 
 export const siteConfig = {
-  name: '奈良 鹿のや',
-  nameEn: 'KANOYA',
-  description: '奈良公園のほど近く、春日の森に寄り添う五室だけの小さなオーベルジュ旅館',
-  descriptionEn: 'A small auberge style inn near Nara Park and Kasuga Forest. Just five rooms.',
+  name: 'Lu Noya',
+  nameJa: 'ル ノヤ',
+  nameEn: 'LU NOYA',
+  tagline: '静寂と美食の宿',
+  taglineEn: 'Silence & Gastronomy',
+  description: '奈良の深い静寂の中に佇む、五室だけの最高級オーベルジュ旅館。美食と空間の調和が、特別な時間を紡ぎます。',
+  descriptionEn: 'A luxury auberge inn of five rooms, nestled in the profound silence of Nara. Where gastronomy and space compose extraordinary moments.',
 
   // Contact
   tel: process.env.NEXT_PUBLIC_TEL || '0742-XX-XXXX',
@@ -15,9 +18,9 @@ export const siteConfig = {
   telInternational: '+81-742-XX-XXXX',
 
   // Reservation
-  reservationUrl: process.env.NEXT_PUBLIC_RESERVATION_URL || '/reserve',
+  reservationUrl: 'https://www.booking.com/hotel/jp/lu-noya.ja.html?chal_t=1770704306457&force_referer=https%3A%2F%2Fwww.google.com%2F',
 
-  // Address (to be updated)
+  // Address
   address: {
     postalCode: '630-XXXX',
     prefecture: '奈良県',

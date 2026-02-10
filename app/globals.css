@@ -3,17 +3,20 @@
 @tailwind utilities;
 
 :root {
-  /* Color System */
-  --bg-main: #F1E6D6;
-  --bg-deep: #2A1F17;
-  --ink-main: #1C1511;
-  --ink-muted: #6E5A4B;
-  --line-subtle: rgba(28, 21, 17, 0.12);
-  --brass: #8C7A4A;
+  /* Gekishibu Color System - Deep, muted, weighty */
+  --bg-main: #1a1a1a;
+  --bg-deep: #0d0d0d;
+  --bg-surface: #222222;
+  --ink-main: #e8e4df;
+  --ink-muted: #8a8580;
+  --line-subtle: rgba(232, 228, 223, 0.08);
+  --brass: #b8a88a;
+  --brass-dark: #8c7a5a;
 
   /* Typography */
-  --font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Garamond', 'Times New Roman', serif;
-  --font-en-serif: 'Garamond', 'Times New Roman', serif;
+  --font-serif: 'Noto Serif JP', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+  --font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --font-en: 'Cormorant Garamond', 'Garamond', 'Times New Roman', serif;
 }
 
 @layer base {
@@ -21,18 +24,20 @@
     font-family: var(--font-serif);
     color: var(--ink-main);
     background-color: var(--bg-main);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     line-height: 1.9;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: auto;
   }
 
   body {
     position: relative;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  /* Subtle paper texture overlay */
+  /* Subtle noise texture overlay for depth */
   body::before {
     content: '';
     position: fixed;
@@ -42,35 +47,30 @@
     height: 100%;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     line-height: 1.6;
   }
 
   p {
-    line-height: 2;
+    line-height: 2.1;
   }
 
   a {
     color: inherit;
     text-decoration: none;
-    transition: opacity 0.3s ease;
-  }
-
-  a:hover {
-    opacity: 0.7;
   }
 }
 
 @layer components {
   /* Section spacing */
   .section-padding {
-    @apply py-20 md:py-28;
+    @apply py-24 md:py-36;
   }
 
   /* Content container */
@@ -80,10 +80,11 @@
 
   /* Subtle divider */
   .divider-subtle {
-    @apply w-full h-px bg-line-subtle;
+    @apply w-full h-px;
+    background: linear-gradient(90deg, transparent 0%, var(--line-subtle) 20%, var(--line-subtle) 80%, transparent 100%);
   }
 
-  /* Image overlay for depth */
+  /* Image overlays */
   .image-depth::after {
     content: '';
     position: absolute;
@@ -92,97 +93,147 @@
     background: radial-gradient(
       ellipse at center,
       transparent 40%,
-      rgba(28, 21, 17, 0.08) 100%
+      rgba(13, 13, 13, 0.15) 100%
     );
   }
 
-  /* Grain overlay for images */
   .image-grain::before {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.06;
     mix-blend-mode: overlay;
+    z-index: 1;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
   }
 
-  /* Button base - quiet, not pushy */
+  /* Buttons - Gekishibu style */
   .btn-quiet {
-    @apply inline-block px-8 py-3 border border-ink-main text-ink-main text-sm tracking-wider transition-all duration-400;
+    @apply inline-block px-10 py-4 text-sm transition-all duration-600;
+    letter-spacing: 0.2em;
+    border: 1px solid var(--brass-dark);
+    color: var(--brass);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-quiet::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--brass-dark);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+  }
+
+  .btn-quiet:hover::before {
+    transform: scaleX(1);
   }
 
   .btn-quiet:hover {
-    @apply bg-ink-main text-bg-main opacity-100;
+    color: var(--bg-main);
   }
 
-  /* Primary CTA - slightly more presence */
+  .btn-quiet > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .btn-primary {
-    @apply inline-block px-8 py-3 bg-ink-main text-bg-main text-sm tracking-wider transition-all duration-400;
+    @apply inline-block px-10 py-4 text-sm transition-all duration-600;
+    letter-spacing: 0.2em;
+    background: var(--brass-dark);
+    color: var(--bg-main);
+    position: relative;
+    overflow: hidden;
   }
 
-  .btn-primary:hover {
-    @apply bg-bg-deep opacity-100;
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+  }
+
+  .btn-primary:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn-primary > * {
+    position: relative;
+    z-index: 1;
   }
 
   /* Text link style */
   .link-subtle {
-    @apply border-b border-line-subtle pb-px transition-all duration-300;
+    @apply pb-px transition-all duration-600;
+    border-bottom: 1px solid var(--brass-dark);
+    color: var(--brass);
   }
 
   .link-subtle:hover {
-    @apply border-ink-muted opacity-100;
+    border-color: var(--brass);
+    opacity: 1;
+  }
+
+  /* Vertical text for Japanese */
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* Mask reveal effect base */
+  .mask-reveal {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mask-reveal.revealed {
+    clip-path: inset(0 0 0 0);
   }
 }
 
 @layer utilities {
-  /* Fade in animation */
-  .animate-fade-in {
-    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Japanese text spacing */
   .text-ja {
-    @apply tracking-wider-ja leading-relaxed-ja;
+    letter-spacing: 0.12em;
+    line-height: 2.1;
   }
 
-  /* English text */
   .text-en {
-    font-family: var(--font-en-serif);
-    @apply tracking-wide;
+    font-family: var(--font-en);
+    letter-spacing: 0.05em;
   }
 
-  /* Muted text color */
   .text-muted {
     color: var(--ink-muted);
   }
 
-  /* Deep background */
   .bg-deep {
     background-color: var(--bg-deep);
-    color: var(--bg-main);
+    color: var(--ink-main);
+  }
+
+  .bg-surface {
+    background-color: var(--bg-surface);
   }
 }
 
 /* Selection color */
 ::selection {
-  background-color: rgba(140, 122, 74, 0.2);
+  background-color: rgba(184, 168, 138, 0.25);
+  color: var(--ink-main);
 }
 
-/* Scrollbar styling - subtle */
+/* Scrollbar - nearly invisible */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -190,10 +241,27 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--line-subtle);
-  border-radius: 3px;
+  background: rgba(232, 228, 223, 0.08);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ink-muted);
+  background: rgba(232, 228, 223, 0.15);
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }

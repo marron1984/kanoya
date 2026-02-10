@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Header, Footer } from '@/components/site'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
@@ -41,11 +40,7 @@ export default function EnglishLayout({
 }>) {
   return (
     <>
-      <Header lang="en" />
-      <main className="pt-16 md:pt-20">
-        {children}
-      </main>
-      <Footer lang="en" />
+      {children}
     </>
   )
 }
