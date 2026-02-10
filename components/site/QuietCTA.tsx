@@ -21,7 +21,7 @@ export function QuietCTA({
     : 'btn-quiet'
 
   const linkProps = external
-    ? { target: '_blank', rel: 'noopener noreferrer' }
+    ? { target: '_blank' as const, rel: 'noopener noreferrer' }
     : {}
 
   if (href) {
@@ -31,14 +31,14 @@ export function QuietCTA({
         className={`${baseClasses} ${className}`}
         {...linkProps}
       >
-        {children}
+        <span className="relative z-10">{children}</span>
       </Link>
     )
   }
 
   return (
     <button className={`${baseClasses} ${className}`}>
-      {children}
+      <span className="relative z-10">{children}</span>
     </button>
   )
 }
@@ -52,19 +52,13 @@ type ReservationCTAProps = {
 export function ReservationCTA({
   variant = 'primary',
   className = '',
-  label = '空室確認・予約',
+  label = '予約を確認する',
 }: ReservationCTAProps) {
-  const reservationUrl = siteConfig.reservationUrl
-
-  // If no external URL, link to internal reserve page
-  const isExternal = reservationUrl.startsWith('http')
-  const href = isExternal ? reservationUrl : '/reserve'
-
   return (
     <QuietCTA
       variant={variant}
-      href={href}
-      external={isExternal}
+      href={siteConfig.reservationUrl}
+      external={true}
       className={className}
     >
       {label}
@@ -79,18 +73,18 @@ type TelCTAProps = {
 
 export function TelCTA({ className = '', showHours = true }: TelCTAProps) {
   return (
-    <div className={`text-sm tracking-wider ${className}`}>
-      <p className="text-ink-muted mb-1">ご予約・お問い合わせ</p>
+    <div className={`text-sm ${className}`} style={{ letterSpacing: '0.12em' }}>
+      <p className="text-shironezu/40 mb-1">ご予約・お問い合わせ</p>
       <p>
         <a
           href={`tel:${siteConfig.tel.replace(/-/g, '')}`}
-          className="link-subtle"
+          className="text-shironezu/70 hover:text-kinnezu transition-colors duration-600"
         >
           TEL {siteConfig.tel}
         </a>
       </p>
       {showHours && (
-        <p className="text-ink-muted text-xs mt-1">{siteConfig.telHours}</p>
+        <p className="text-shironezu/30 text-xs mt-1">{siteConfig.telHours}</p>
       )}
     </div>
   )

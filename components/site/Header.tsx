@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Logo } from './Logo'
+import { motion, AnimatePresence } from 'framer-motion'
 import { siteConfig } from '@/lib/siteConfig'
 
 type HeaderProps = {
@@ -25,145 +25,184 @@ const navItemsEn = [
 
 export function Header({ lang = 'ja' }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const navItems = lang === 'ja' ? navItemsJa : navItemsEn
   const homeHref = lang === 'ja' ? '/' : '/en'
-  const reserveHref = lang === 'ja' ? '/reserve' : '/en/reserve'
   const langSwitchHref = lang === 'ja' ? '/en' : '/'
   const langSwitchLabel = lang === 'ja' ? 'EN' : 'JP'
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-bg-main/95 backdrop-blur-sm">
-      <div className="max-w-content mx-auto px-6 md:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Logo variant="text" size="sm" href={homeHref} />
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm tracking-wider text-ink-muted hover:text-ink-main transition-colors duration-300"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Desktop Contact & Language */}
-          <div className="hidden lg:flex items-center gap-6">
-            <Link
-              href={langSwitchHref}
-              className="text-xs tracking-wider text-ink-muted hover:text-ink-main transition-colors duration-300"
-            >
-              {langSwitchLabel}
-            </Link>
-
-            <div className="text-right text-xs tracking-wider">
-              <p className="text-ink-muted">
-                {lang === 'ja' ? 'ご予約・お問い合わせ' : 'Reservations'}
-              </p>
-              <p>
-                <a
-                  href={`tel:${siteConfig.tel.replace(/-/g, '')}`}
-                  className="hover:text-ink-muted transition-colors duration-300"
-                >
-                  TEL {lang === 'ja' ? siteConfig.tel : siteConfig.telInternational}
-                </a>
-              </p>
-              <p className="text-ink-muted">{siteConfig.telHours}</p>
-            </div>
-
-            <Link
-              href={reserveHref}
-              className="btn-quiet text-xs"
-            >
-              {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 -mr-2"
-            aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
-          >
-            <div className="w-5 h-4 flex flex-col justify-between">
-              <span
-                className={`block w-full h-px bg-ink-main transition-transform duration-300 ${
-                  isMenuOpen ? 'rotate-45 translate-y-[7px]' : ''
-                }`}
-              />
-              <span
-                className={`block w-full h-px bg-ink-main transition-opacity duration-300 ${
-                  isMenuOpen ? 'opacity-0' : ''
-                }`}
-              />
-              <span
-                className={`block w-full h-px bg-ink-main transition-transform duration-300 ${
-                  isMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''
-                }`}
-              />
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-400 ${
-          isMenuOpen ? 'max-h-screen' : 'max-h-0'
+    <>
+      <motion.header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-800 ${
+          isScrolled
+            ? 'bg-sumi-deep/90 backdrop-blur-md'
+            : 'bg-transparent'
         }`}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="border-t border-line-subtle">
-          <div className="max-w-content mx-auto px-6 py-8">
-            <nav className="space-y-4 mb-8">
+        <div className="max-w-content mx-auto px-6 md:px-8">
+          <div className="flex items-center justify-between h-20 md:h-24">
+            {/* Logo */}
+            <Link href={homeHref} className="inline-block group">
+              <span
+                className="text-sm md:text-base text-shironezu/90 group-hover:text-kinnezu transition-colors duration-600"
+                style={{ fontFamily: 'var(--font-en)', letterSpacing: '0.25em' }}
+              >
+                L&apos;ARTISAN KANOYA
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-10">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="block text-sm tracking-wider py-2"
-                  onClick={() => setIsMenuOpen(false)}
+                  className="text-xs text-shironezu/50 hover:text-kinnezu transition-colors duration-600"
+                  style={{ letterSpacing: '0.2em' }}
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="pt-6 border-t border-line-subtle space-y-4">
-              <div className="text-sm tracking-wider">
-                <p className="text-ink-muted mb-1">
-                  {lang === 'ja' ? 'ご予約・お問い合わせ' : 'Reservations'}
-                </p>
-                <p>
-                  <a href={`tel:${siteConfig.tel.replace(/-/g, '')}`}>
-                    TEL {lang === 'ja' ? siteConfig.tel : siteConfig.telInternational}
-                  </a>
-                </p>
-                <p className="text-ink-muted text-xs mt-1">{siteConfig.telHours}</p>
-              </div>
+            {/* Desktop Right Side */}
+            <div className="hidden lg:flex items-center gap-8">
+              <Link
+                href={langSwitchHref}
+                className="text-xs text-shironezu/40 hover:text-kinnezu transition-colors duration-600"
+                style={{ letterSpacing: '0.2em' }}
+              >
+                {langSwitchLabel}
+              </Link>
 
-              <div className="flex gap-4">
-                <Link
-                  href={reserveHref}
-                  className="btn-quiet text-xs"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {lang === 'ja' ? '空室確認・予約' : 'Reserve'}
-                </Link>
-                <Link
-                  href={langSwitchHref}
-                  className="btn-quiet text-xs"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {langSwitchLabel}
-                </Link>
-              </div>
+              <a
+                href={siteConfig.reservationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-kinnezu border border-kinnezu-dark/40 px-6 py-2.5 hover:bg-kinnezu-dark/20 transition-all duration-600"
+                style={{ letterSpacing: '0.2em' }}
+              >
+                {lang === 'ja' ? '予約' : 'Reserve'}
+              </a>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="lg:hidden p-2 -mr-2 relative w-10 h-10 flex items-center justify-center"
+              aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
+            >
+              <div className="w-6 h-4 flex flex-col justify-between">
+                <motion.span
+                  className="block w-full h-px bg-shironezu/70"
+                  animate={{
+                    rotate: isMenuOpen ? 45 : 0,
+                    y: isMenuOpen ? 7.5 : 0,
+                  }}
+                  transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                />
+                <motion.span
+                  className="block w-full h-px bg-shironezu/70"
+                  animate={{ opacity: isMenuOpen ? 0 : 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+                <motion.span
+                  className="block w-full h-px bg-shironezu/70"
+                  animate={{
+                    rotate: isMenuOpen ? -45 : 0,
+                    y: isMenuOpen ? -7.5 : 0,
+                  }}
+                  transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                />
+              </div>
+            </button>
           </div>
         </div>
-      </div>
-    </header>
+      </motion.header>
+
+      {/* Full-screen Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-sumi-deep/98 backdrop-blur-lg flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <nav className="text-center space-y-8">
+              {navItems.map((item, i) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: i * 0.08,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <Link
+                    href={item.href}
+                    className="block text-lg text-shironezu/80 hover:text-kinnezu transition-colors duration-400"
+                    style={{ letterSpacing: '0.2em' }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+
+              <motion.div
+                className="pt-8 border-t border-shironezu/10"
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: navItems.length * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <a
+                  href={siteConfig.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm text-kinnezu border border-kinnezu-dark/40 px-8 py-3"
+                  style={{ letterSpacing: '0.2em' }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {lang === 'ja' ? '予約を確認する' : 'Reserve'}
+                </a>
+
+                <div className="mt-6">
+                  <Link
+                    href={langSwitchHref}
+                    className="text-xs text-shironezu/40"
+                    style={{ letterSpacing: '0.2em' }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {langSwitchLabel}
+                  </Link>
+                </div>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }

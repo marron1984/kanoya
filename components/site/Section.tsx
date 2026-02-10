@@ -19,7 +19,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`py-20 md:py-28 ${deep ? 'bg-deep' : ''} ${className}`}
+      className={`py-24 md:py-36 ${deep ? 'bg-sumi-deep' : ''} ${className}`}
     >
       <Container className={containerClassName}>
         {children}
