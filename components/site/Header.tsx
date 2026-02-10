@@ -59,7 +59,7 @@ export function Header({ lang = 'ja' }: HeaderProps) {
                 className="text-sm md:text-base text-shironezu/90 group-hover:text-kinnezu transition-colors duration-600"
                 style={{ fontFamily: 'var(--font-en)', letterSpacing: '0.25em' }}
               >
-                LU NOYA
+                L&apos;ARTISAN KANOYA
               </span>
             </Link>
 

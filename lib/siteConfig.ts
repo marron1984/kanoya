@@ -1,12 +1,12 @@
 /**
- * Site Configuration - Lu Noya
+ * Site Configuration - L'Artisan KANOYA
  * 最高級オーベルジュ旅館
  */
 
 export const siteConfig = {
-  name: 'Lu Noya',
-  nameJa: 'ル ノヤ',
-  nameEn: 'LU NOYA',
+  name: "L'Artisan KANOYA",
+  nameJa: '鹿のや',
+  nameEn: "L'ARTISAN KANOYA",
   tagline: '静寂と美食の宿',
   taglineEn: 'Silence & Gastronomy',
   description: '奈良の深い静寂の中に佇む、五室だけの最高級オーベルジュ旅館。美食と空間の調和が、特別な時間を紡ぎます。',

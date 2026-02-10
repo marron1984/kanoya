@@ -27,9 +27,9 @@ export function Logo({
         letterSpacing: '0.25em',
       }}
     >
-      {variant === 'text' && 'LU NOYA'}
+      {variant === 'text' && "L'ARTISAN KANOYA"}
       {variant === 'mark' && '鹿'}
-      {variant === 'en' && 'LU NOYA'}
+      {variant === 'en' && "L'ARTISAN KANOYA"}
     </span>
   )
 

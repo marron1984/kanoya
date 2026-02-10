@@ -32,7 +32,7 @@ function HeroSection() {
       >
         <Image
           src={siteImages.hero.top}
-          alt="Lu Noya 外観の夕景"
+          alt="L'Artisan KANOYA 外観の夕景"
           fill
           priority
           className="object-cover"
@@ -65,7 +65,7 @@ function HeroSection() {
             className="text-3xl md:text-4xl text-shironezu/90"
             style={{ fontFamily: 'var(--font-en)', letterSpacing: '0.35em' }}
           >
-            LU NOYA
+            L&apos;ARTISAN KANOYA
           </span>
         </motion.div>
 
@@ -164,7 +164,7 @@ function ConceptSection() {
               </h2>
               <div className="space-y-6 text-sm text-shironezu/50 leading-loose" style={{ letterSpacing: '0.08em' }}>
                 <p>
-                  Lu Noyaは<br />
+                  L&apos;Artisan KANOYAは<br />
                   奈良の深い静寂の中に佇む<br />
                   五室だけの小さなオーベルジュ旅館です
                 </p>

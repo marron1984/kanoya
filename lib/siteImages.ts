@@ -1,65 +1,62 @@
 /**
  * Site Images Configuration
- * Centralized image source management for easy updates
+ * Centralized image source management
  *
- * Naming convention: page-subject-angle.jpg
- * - English lowercase
- * - Hyphens only
- * - No numbers or Japanese
+ * Using actual L'Artisan KANOYA photography.
  */
 
 export const siteImages = {
-  // Hero images (16:9)
+  // Hero images (wide format)
   hero: {
-    top: '/images/hero/hero-entrance-evening.jpg',
-    rooms: '/images/hero/hero-room-window.jpg',
-    dining: '/images/hero/hero-dining-counter.jpg',
-    experience: '/images/hero/hero-garden-morning.jpg',
-    access: '/images/hero/hero-nara-park.jpg',
-    faq: '/images/hero/hero-interior-detail.jpg',
-    reserve: '/images/hero/hero-lobby-calm.jpg',
+    top: '/images/image-07.jpg',          // Kumiko lounge — first impression
+    rooms: '/images/image-02.jpg',         // Room with twin beds and shoji screens
+    dining: '/images/image-20.jpg',        // Counter dining overview with lattice
+    experience: '/images/image-18.jpg',    // Autumn Nara park with deer
+    access: '/images/image-03.jpg',        // Building exterior
+    faq: '/images/image-04.jpg',           // Bedroom through doorway
+    reserve: '/images/image-19.jpg',       // L'Artisan KANOYA night sign
   },
 
-  // Room images (4:5 for gallery, 3:2 for wide)
+  // Room images
   rooms: {
-    overview: '/images/rooms/rooms-overview-wide.jpg',
-    window: '/images/rooms/rooms-window-light.jpg',
-    wall: '/images/rooms/rooms-wall-texture.jpg',
-    lighting: '/images/rooms/rooms-lighting-night.jpg',
-    amenity: '/images/rooms/rooms-amenity-detail.jpg',
-    washbasin: '/images/rooms/rooms-washbasin-detail.jpg',
-    bath: '/images/rooms/rooms-bath-evening.jpg',
+    overview: '/images/image-01.jpg',      // Spacious room with sofa and bed
+    window: '/images/image-11.jpg',        // Living area with garden view through shoji
+    wall: '/images/image-09.jpg',          // Room with gold-patterned bedding
+    lighting: '/images/image-10.jpg',      // Warm ambient room lighting
+    amenity: '/images/image-12.jpg',       // Tea and coffee set
+    washbasin: '/images/image-14.jpg',     // Washbasin with amenities
+    bath: '/images/image-15.jpg',          // Bathroom with bath
   },
 
-  // Dining images (4:5 for gallery, 3:2 for wide)
+  // Dining images
   dining: {
-    counter: '/images/dining/dining-counter-wide.jpg',
-    dish: '/images/dining/dining-dish-seasonal.jpg',
-    vessel: '/images/dining/dining-vessel-detail.jpg',
-    chef: '/images/dining/dining-chef-hands.jpg',
-    atmosphere: '/images/dining/dining-atmosphere-night.jpg',
+    counter: '/images/image-21.jpg',       // Counter with chef at work
+    dish: '/images/image-31.jpg',          // Beef cutlet — top-down plating
+    vessel: '/images/image-29.jpg',        // Fish on ceramic vessel
+    chef: '/images/image-25.jpg',          // Chef hands plating a dish
+    atmosphere: '/images/image-26.jpg',    // Counter at night with wine glasses
   },
 
-  // Experience images (4:5 for gallery)
+  // Experience images
   experience: {
-    morning: '/images/experience/experience-park-morning.jpg',
-    afternoon: '/images/experience/experience-checkin-quiet.jpg',
-    evening: '/images/experience/experience-dinner-ambience.jpg',
-    night: '/images/experience/experience-room-night.jpg',
+    morning: '/images/image-18.jpg',       // Nara park autumn morning
+    afternoon: '/images/image-07.jpg',     // Check-in lounge
+    evening: '/images/image-27.jpg',       // Counter dining set up
+    night: '/images/image-04.jpg',         // Bedroom at night
   },
 
-  // Access images (3:2 for wide)
+  // Access images
   access: {
-    map: '/images/access/access-map-illustration.jpg',
-    exterior: '/images/access/access-exterior-entrance.jpg',
-    surroundings: '/images/access/access-nara-park.jpg',
+    map: '/images/image-06.jpg',           // KANOYA entrance sign
+    exterior: '/images/image-03.jpg',      // Building exterior
+    surroundings: '/images/image-18.jpg',  // Nara park surroundings
   },
 
-  // Amenity detail images (1:1)
+  // Amenity detail images
   amenity: {
-    yukata: '/images/amenity/amenity-yukata-folded.jpg',
-    towel: '/images/amenity/amenity-towel-stack.jpg',
-    tea: '/images/amenity/amenity-tea-set.jpg',
+    yukata: '/images/image-16.jpg',        // Bathroom amenity set
+    towel: '/images/image-17.jpg',         // Towels in basket
+    tea: '/images/image-13.jpg',           // Ceramics drawer
   },
 } as const
 

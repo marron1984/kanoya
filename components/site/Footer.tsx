@@ -37,7 +37,7 @@ export function Footer({ lang = 'ja' }: FooterProps) {
                 className="text-lg text-shironezu/80"
                 style={{ fontFamily: 'var(--font-en)', letterSpacing: '0.25em' }}
               >
-                LU NOYA
+                L&apos;ARTISAN KANOYA
               </span>
               <p className="mt-2 text-xs text-shironezu/30" style={{ letterSpacing: '0.15em' }}>
                 {siteConfig.tagline}
